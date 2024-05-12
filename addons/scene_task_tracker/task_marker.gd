@@ -9,6 +9,7 @@ enum TaskTypes {
 	TECHNICAL_IMPROVEMENT,
 	POLISH,
 	REGRESSION_TEST,
+	UNKNOWN,
 }
 
 const BILLBOARDS = [
@@ -17,6 +18,7 @@ const BILLBOARDS = [
 	preload("res://addons/scene_task_tracker/model/markers/TechImprMarker.glb"),
 	preload("res://addons/scene_task_tracker/model/markers/PolishMarker.glb"),
 	preload("res://addons/scene_task_tracker/model/markers/RegTestMarker.glb"),
+	preload("res://addons/scene_task_tracker/model/markers/UnknownMarker.glb"),
 ]
 
 const ICONS = [
@@ -25,6 +27,7 @@ const ICONS = [
 	preload("res://addons/scene_task_tracker/icons/tech_improvement.svg"),
 	preload("res://addons/scene_task_tracker/icons/polish.svg"),
 	preload("res://addons/scene_task_tracker/icons/regression_test.svg"),
+	preload("res://addons/scene_task_tracker/icons/unkown.svg")
 ]
 
 const COLORS = [
@@ -33,10 +36,11 @@ const COLORS = [
 	Color.GOLD,
 	Color.MEDIUM_AQUAMARINE,
 	Color.SILVER,
+	Color.MAGENTA,
 ]
 
-const DEFAULT_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/BugMarkerNew.glb")
-const DEFAULT_ICON = preload("res://addons/scene_task_tracker/icons/pending.svg")
+const DEFAULT_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/UnknownMarker.glb")
+const DEFAULT_ICON = preload("res://addons/scene_task_tracker/icons/unkown.svg")
 const DEFAULT_COLOR = Color.MAGENTA
 
 const FIXED_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/CheckMark.glb")
@@ -58,13 +62,14 @@ const FIXED_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/C
 		task_changed.emit()
 
 
-@export var task_type_en: TaskTypes = TaskTypes.BUG:
+@export var task_type: TaskTypes = TaskTypes.UNKNOWN:
 	get:
-		return task_type_en
+		return task_type
 	set(value):
-		task_type_en = value
+		task_type = value
 		task_changed.emit()
 		_update_mesh()
+
 
 @export_range(1, 5) var priority: int = 1:
 	get:
@@ -96,15 +101,15 @@ func _ready():
 
 
 func get_color() -> Color:
-	if task_type_en > len(COLORS) - 1:
+	if task_type > len(COLORS) - 1:
 		return DEFAULT_COLOR
-	return COLORS[task_type_en]
+	return COLORS[task_type]
 
 
 func get_icon() -> Texture2D:
-	if task_type_en > len(ICONS) - 1:
+	if task_type > len(ICONS) - 1:
 		return DEFAULT_ICON
-	return ICONS[task_type_en]
+	return ICONS[task_type]
 
 
 func _setup() -> void:
@@ -125,6 +130,6 @@ func _update_mesh():
 	if fixed:
 		_billboard_res = FIXED_BILLBOARD
 	else:
-		_billboard_res = BILLBOARDS[task_type_en]
+		_billboard_res = BILLBOARDS[task_type]
 	_billboard = _billboard_res.instantiate()
 	add_child(_billboard)

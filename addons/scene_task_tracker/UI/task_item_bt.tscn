@@ -36,15 +36,6 @@ mouse_filter = 2
 disabled = true
 flat = true
 
-[node name="DescriptionLabel" type="Label" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Fix: a thing that is wrong. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-clip_text = true
-text_overrun_behavior = 3
-
 [node name="DescriptionButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
