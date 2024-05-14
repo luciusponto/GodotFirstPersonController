@@ -350,6 +350,10 @@ func _no_clip_move(delta: float) -> bool:
 		input_axis = Input.get_vector(&"move_back", &"move_forward",
 		&"move_left", &"move_right")
 		_direction_input(true)
+		if Input.is_action_pressed(&"jump"):
+			direction += Vector3.UP
+		if Input.is_action_pressed(&"crouch"):
+			direction += Vector3.DOWN
 		var fly_speed = max_speed * 10 if Input.is_action_pressed(&"sprint") else max_speed
 		var target: Vector3 = direction * fly_speed
 		var temp_vel := velocity
